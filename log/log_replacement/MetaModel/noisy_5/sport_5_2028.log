@@ -1,0 +1,339 @@
+[2026-01-22 15:49:28] INFO PID of this process: 2409440
+[2026-01-22 15:49:35] INFO {'model': {'embed_dim': 64, 'loss_fn': 'bce', 'sub_model': 'SASRec', 'hidden_size': 128, 'layer_num': 2, 'head_num': 2, 'dropout_rate': 0.5, 'activation': 'gelu', 'tau_min': 1, 'layer_norm_eps': 1e-12, 'model': 'MetaModel'}, 'data': {'domain_name_list': ['sport_5'], 'user_threshold': 5, 'item_threshold': 5, 'max_seq_len': 50, 'dataset_class': 'general', 'train_file': '_regen', 'dataset': 'noisy_5'}, 'train': {'batch_size': 256, 'early_stop_mode': 'max', 'early_stop_patience': 20, 'epochs': 1000, 'device': 'cuda', 'optimizer': 'adam', 'learning_rate': 0.001, 'weight_decay': 0, 'num_neg': 1, 'seed': 2028, 'interval': 30, 'meta_optimizer': 'sgd', 'meta_learning_rate': 0.001, 'hpo_learning_rate': 0.001, 'meta_weight_decay': 0.001, 'descent_step': 30, 'warmup_epoch': 10}, 'eval': {'batch_size': 2048, 'cutoff': [20, 10], 'val_metrics': ['ndcg', 'recall'], 'test_metrics': ['ndcg', 'recall'], 'topk': 100, 'save_path': './saved/'}}
+[2026-01-22 15:49:35] INFO <data.dataset.SeparateDataset object at 0x7fa3232791f0>
+[2026-01-22 15:49:35] INFO save_dir:saved
+[2026-01-22 15:49:35] INFO {'model': {'embed_dim': 64, 'loss_fn': 'bce', 'hidden_size': 128, 'layer_num': 2, 'head_num': 2, 'dropout_rate': 0.5, 'activation': 'gelu', 'layer_norm_eps': 1e-12, 'model': 'SASRec'}, 'data': {'domain_name_list': ['beauty_5'], 'user_threshold': 5, 'item_threshold': 5, 'max_seq_len': 50, 'dataset_class': 'general', 'train_file': '_regen', 'dataset': 'noisy_5'}, 'train': {'batch_size': 256, 'early_stop_mode': 'max', 'early_stop_patience': 20, 'epochs': 1000, 'device': 0, 'optimizer': 'adam', 'learning_rate': 0.001, 'weight_decay': 0, 'num_neg': 1, 'seed': 2028}, 'eval': {'batch_size': 2048, 'cutoff': [20, 10], 'val_metrics': ['ndcg', 'recall'], 'test_metrics': ['ndcg', 'recall'], 'topk': 100, 'save_path': './saved/'}}
+[2026-01-22 15:49:35] INFO MetaModel(
+  (item_embedding): Embedding(18358, 64, padding_idx=0)
+  (sub_model): SASRec(
+    (item_embedding): Embedding(18358, 64, padding_idx=0)
+    (query_encoder): SASRecQueryEncoder(
+      (item_encoder): Embedding(18358, 64, padding_idx=0)
+      (position_emb): Embedding(50, 64)
+      (transformer_layer): TransformerEncoder(
+        (layers): ModuleList(
+          (0): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=64, out_features=64, bias=True)
+            )
+            (linear1): Linear(in_features=64, out_features=128, bias=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+            (linear2): Linear(in_features=128, out_features=64, bias=True)
+            (norm1): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+            (norm2): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+            (dropout1): Dropout(p=0.5, inplace=False)
+            (dropout2): Dropout(p=0.5, inplace=False)
+          )
+          (1): TransformerEncoderLayer(
+            (self_attn): MultiheadAttention(
+              (out_proj): NonDynamicallyQuantizableLinear(in_features=64, out_features=64, bias=True)
+            )
+            (linear1): Linear(in_features=64, out_features=128, bias=True)
+            (dropout): Dropout(p=0.5, inplace=False)
+            (linear2): Linear(in_features=128, out_features=64, bias=True)
+            (norm1): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+            (norm2): LayerNorm((64,), eps=1e-12, elementwise_affine=True)
+            (dropout1): Dropout(p=0.5, inplace=False)
+            (dropout2): Dropout(p=0.5, inplace=False)
+          )
+        )
+      )
+      (dropout): Dropout(p=0.5, inplace=False)
+      (training_pooling_layer): SeqPoolingLayer()
+      (eval_pooling_layer): SeqPoolingLayer()
+    )
+    (loss_fn): BinaryCrossEntropyLoss()
+  )
+  (meta_module): Sequential(
+    (0): Linear(in_features=64, out_features=64, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=64, out_features=2, bias=True)
+  )
+)
+[2026-01-22 15:50:13] INFO {'epoch': 0, 'sport_5_ndcg@20': tensor(0.0087), 'sport_5_recall@20': tensor(0.0233), 'ndcg@20': tensor(0.0087), 'recall@20': tensor(0.0233), 'train_loss_0': tensor(1.2114, device='cuda:0')}
+[2026-01-22 15:50:13] INFO training_time: 36.25131320953369
+[2026-01-22 15:50:13] INFO inference_time: 1.488682508468628
+[2026-01-22 15:50:13] INFO ndcg@20 improved. Best value: 0.0087
+[2026-01-22 15:50:13] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:50:57] INFO {'epoch': 1, 'sport_5_ndcg@20': tensor(0.0138), 'sport_5_recall@20': tensor(0.0340), 'ndcg@20': tensor(0.0138), 'recall@20': tensor(0.0340), 'train_loss_0': tensor(1.0547, device='cuda:0')}
+[2026-01-22 15:50:57] INFO training_time: 79.55068826675415
+[2026-01-22 15:50:57] INFO inference_time: 2.561272144317627
+[2026-01-22 15:50:57] INFO ndcg@20 improved. Best value: 0.0138
+[2026-01-22 15:50:57] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:51:47] INFO {'epoch': 2, 'sport_5_ndcg@20': tensor(0.0160), 'sport_5_recall@20': tensor(0.0401), 'ndcg@20': tensor(0.0160), 'recall@20': tensor(0.0401), 'train_loss_0': tensor(0.9369, device='cuda:0')}
+[2026-01-22 15:51:47] INFO training_time: 127.80216407775879
+[2026-01-22 15:51:47] INFO inference_time: 3.6735594272613525
+[2026-01-22 15:51:47] INFO ndcg@20 improved. Best value: 0.0160
+[2026-01-22 15:51:47] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:52:49] INFO {'epoch': 3, 'sport_5_ndcg@20': tensor(0.0177), 'sport_5_recall@20': tensor(0.0429), 'ndcg@20': tensor(0.0177), 'recall@20': tensor(0.0429), 'train_loss_0': tensor(0.8458, device='cuda:0')}
+[2026-01-22 15:52:49] INFO training_time: 188.45314955711365
+[2026-01-22 15:52:49] INFO inference_time: 4.990328550338745
+[2026-01-22 15:52:49] INFO ndcg@20 improved. Best value: 0.0177
+[2026-01-22 15:52:49] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:53:50] INFO {'epoch': 4, 'sport_5_ndcg@20': tensor(0.0185), 'sport_5_recall@20': tensor(0.0448), 'ndcg@20': tensor(0.0185), 'recall@20': tensor(0.0448), 'train_loss_0': tensor(0.7711, device='cuda:0')}
+[2026-01-22 15:53:50] INFO training_time: 248.73561429977417
+[2026-01-22 15:53:50] INFO inference_time: 6.147475242614746
+[2026-01-22 15:53:50] INFO ndcg@20 improved. Best value: 0.0185
+[2026-01-22 15:53:50] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:54:52] INFO {'epoch': 5, 'sport_5_ndcg@20': tensor(0.0194), 'sport_5_recall@20': tensor(0.0461), 'ndcg@20': tensor(0.0194), 'recall@20': tensor(0.0461), 'train_loss_0': tensor(0.7170, device='cuda:0')}
+[2026-01-22 15:54:52] INFO training_time: 309.35597681999207
+[2026-01-22 15:54:52] INFO inference_time: 7.090395212173462
+[2026-01-22 15:54:52] INFO ndcg@20 improved. Best value: 0.0194
+[2026-01-22 15:54:52] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:55:53] INFO {'epoch': 6, 'sport_5_ndcg@20': tensor(0.0202), 'sport_5_recall@20': tensor(0.0474), 'ndcg@20': tensor(0.0202), 'recall@20': tensor(0.0474), 'train_loss_0': tensor(0.6775, device='cuda:0')}
+[2026-01-22 15:55:53] INFO training_time: 369.7635281085968
+[2026-01-22 15:55:53] INFO inference_time: 8.21192717552185
+[2026-01-22 15:55:53] INFO ndcg@20 improved. Best value: 0.0202
+[2026-01-22 15:55:53] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 15:56:55] INFO {'epoch': 7, 'sport_5_ndcg@20': tensor(0.0198), 'sport_5_recall@20': tensor(0.0471), 'ndcg@20': tensor(0.0198), 'recall@20': tensor(0.0471), 'train_loss_0': tensor(0.6471, device='cuda:0')}
+[2026-01-22 15:56:55] INFO training_time: 429.9939501285553
+[2026-01-22 15:56:55] INFO inference_time: 9.21288776397705
+[2026-01-22 15:57:56] INFO {'epoch': 8, 'sport_5_ndcg@20': tensor(0.0198), 'sport_5_recall@20': tensor(0.0473), 'ndcg@20': tensor(0.0198), 'recall@20': tensor(0.0473), 'train_loss_0': tensor(0.6211, device='cuda:0')}
+[2026-01-22 15:57:56] INFO training_time: 490.5168385505676
+[2026-01-22 15:57:56] INFO inference_time: 10.317129135131836
+[2026-01-22 15:58:58] INFO {'epoch': 9, 'sport_5_ndcg@20': tensor(0.0205), 'sport_5_recall@20': tensor(0.0471), 'ndcg@20': tensor(0.0205), 'recall@20': tensor(0.0471), 'train_loss_0': tensor(0.6045, device='cuda:0')}
+[2026-01-22 15:58:58] INFO training_time: 550.7015881538391
+[2026-01-22 15:58:58] INFO inference_time: 11.69408130645752
+[2026-01-22 15:58:58] INFO ndcg@20 improved. Best value: 0.0205
+[2026-01-22 15:58:58] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:00:00] INFO {'epoch': 10, 'sport_5_ndcg@20': tensor(0.0205), 'sport_5_recall@20': tensor(0.0482), 'ndcg@20': tensor(0.0205), 'recall@20': tensor(0.0482), 'train_loss_0': tensor(0.5899, device='cuda:0')}
+[2026-01-22 16:00:00] INFO training_time: 611.1022427082062
+[2026-01-22 16:00:00] INFO inference_time: 12.988415002822876
+[2026-01-22 16:00:00] INFO ndcg@20 improved. Best value: 0.0205
+[2026-01-22 16:00:00] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:01:23] INFO {'epoch': 11, 'sport_5_ndcg@20': tensor(0.0219), 'sport_5_recall@20': tensor(0.0515), 'ndcg@20': tensor(0.0219), 'recall@20': tensor(0.0515), 'train_loss_0': tensor(0.2882, device='cuda:0')}
+[2026-01-22 16:01:23] INFO training_time: 693.7072250843048
+[2026-01-22 16:01:23] INFO inference_time: 13.898162364959717
+[2026-01-22 16:01:23] INFO ndcg@20 improved. Best value: 0.0219
+[2026-01-22 16:01:23] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:02:47] INFO {'epoch': 12, 'sport_5_ndcg@20': tensor(0.0219), 'sport_5_recall@20': tensor(0.0517), 'ndcg@20': tensor(0.0219), 'recall@20': tensor(0.0517), 'train_loss_0': tensor(0.2805, device='cuda:0')}
+[2026-01-22 16:02:47] INFO training_time: 776.5001921653748
+[2026-01-22 16:02:47] INFO inference_time: 15.106439590454102
+[2026-01-22 16:04:10] INFO {'epoch': 13, 'sport_5_ndcg@20': tensor(0.0219), 'sport_5_recall@20': tensor(0.0510), 'ndcg@20': tensor(0.0219), 'recall@20': tensor(0.0510), 'train_loss_0': tensor(0.2787, device='cuda:0')}
+[2026-01-22 16:04:10] INFO training_time: 858.5902194976807
+[2026-01-22 16:04:10] INFO inference_time: 16.153606176376343
+[2026-01-22 16:05:35] INFO {'epoch': 14, 'sport_5_ndcg@20': tensor(0.0220), 'sport_5_recall@20': tensor(0.0516), 'ndcg@20': tensor(0.0220), 'recall@20': tensor(0.0516), 'train_loss_0': tensor(0.2759, device='cuda:0')}
+[2026-01-22 16:05:35] INFO training_time: 942.3539383411407
+[2026-01-22 16:05:35] INFO inference_time: 17.2811279296875
+[2026-01-22 16:05:35] INFO ndcg@20 improved. Best value: 0.0220
+[2026-01-22 16:05:35] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:06:59] INFO {'epoch': 15, 'sport_5_ndcg@20': tensor(0.0225), 'sport_5_recall@20': tensor(0.0527), 'ndcg@20': tensor(0.0225), 'recall@20': tensor(0.0527), 'train_loss_0': tensor(0.2753, device='cuda:0')}
+[2026-01-22 16:06:59] INFO training_time: 1024.795486688614
+[2026-01-22 16:06:59] INFO inference_time: 18.569127321243286
+[2026-01-22 16:06:59] INFO ndcg@20 improved. Best value: 0.0225
+[2026-01-22 16:06:59] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:08:23] INFO {'epoch': 16, 'sport_5_ndcg@20': tensor(0.0220), 'sport_5_recall@20': tensor(0.0514), 'ndcg@20': tensor(0.0220), 'recall@20': tensor(0.0514), 'train_loss_0': tensor(0.2743, device='cuda:0')}
+[2026-01-22 16:08:23] INFO training_time: 1107.9523165225983
+[2026-01-22 16:08:23] INFO inference_time: 19.71210265159607
+[2026-01-22 16:09:47] INFO {'epoch': 17, 'sport_5_ndcg@20': tensor(0.0216), 'sport_5_recall@20': tensor(0.0504), 'ndcg@20': tensor(0.0216), 'recall@20': tensor(0.0504), 'train_loss_0': tensor(0.2733, device='cuda:0')}
+[2026-01-22 16:09:47] INFO training_time: 1190.3673112392426
+[2026-01-22 16:09:47] INFO inference_time: 20.761337995529175
+[2026-01-22 16:11:10] INFO {'epoch': 18, 'sport_5_ndcg@20': tensor(0.0220), 'sport_5_recall@20': tensor(0.0513), 'ndcg@20': tensor(0.0220), 'recall@20': tensor(0.0513), 'train_loss_0': tensor(0.2704, device='cuda:0')}
+[2026-01-22 16:11:10] INFO training_time: 1272.6261558532715
+[2026-01-22 16:11:10] INFO inference_time: 21.801569938659668
+[2026-01-22 16:12:34] INFO {'epoch': 19, 'sport_5_ndcg@20': tensor(0.0221), 'sport_5_recall@20': tensor(0.0507), 'ndcg@20': tensor(0.0221), 'recall@20': tensor(0.0507), 'train_loss_0': tensor(0.2688, device='cuda:0')}
+[2026-01-22 16:12:34] INFO training_time: 1355.5770967006683
+[2026-01-22 16:12:34] INFO inference_time: 22.89262294769287
+[2026-01-22 16:13:58] INFO {'epoch': 20, 'sport_5_ndcg@20': tensor(0.0224), 'sport_5_recall@20': tensor(0.0518), 'ndcg@20': tensor(0.0224), 'recall@20': tensor(0.0518), 'train_loss_0': tensor(0.2662, device='cuda:0')}
+[2026-01-22 16:13:58] INFO training_time: 1437.704630613327
+[2026-01-22 16:13:58] INFO inference_time: 24.44520616531372
+[2026-01-22 16:15:21] INFO {'epoch': 21, 'sport_5_ndcg@20': tensor(0.0230), 'sport_5_recall@20': tensor(0.0524), 'ndcg@20': tensor(0.0230), 'recall@20': tensor(0.0524), 'train_loss_0': tensor(0.2646, device='cuda:0')}
+[2026-01-22 16:15:21] INFO training_time: 1520.2463414669037
+[2026-01-22 16:15:21] INFO inference_time: 25.504964351654053
+[2026-01-22 16:15:21] INFO ndcg@20 improved. Best value: 0.0230
+[2026-01-22 16:15:21] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:16:45] INFO {'epoch': 22, 'sport_5_ndcg@20': tensor(0.0225), 'sport_5_recall@20': tensor(0.0516), 'ndcg@20': tensor(0.0225), 'recall@20': tensor(0.0516), 'train_loss_0': tensor(0.2613, device='cuda:0')}
+[2026-01-22 16:16:45] INFO training_time: 1602.5246767997742
+[2026-01-22 16:16:45] INFO inference_time: 26.659234285354614
+[2026-01-22 16:18:08] INFO {'epoch': 23, 'sport_5_ndcg@20': tensor(0.0217), 'sport_5_recall@20': tensor(0.0503), 'ndcg@20': tensor(0.0217), 'recall@20': tensor(0.0503), 'train_loss_0': tensor(0.2598, device='cuda:0')}
+[2026-01-22 16:18:08] INFO training_time: 1684.699068069458
+[2026-01-22 16:18:08] INFO inference_time: 27.823927879333496
+[2026-01-22 16:19:32] INFO {'epoch': 24, 'sport_5_ndcg@20': tensor(0.0228), 'sport_5_recall@20': tensor(0.0526), 'ndcg@20': tensor(0.0228), 'recall@20': tensor(0.0526), 'train_loss_0': tensor(0.2596, device='cuda:0')}
+[2026-01-22 16:19:32] INFO training_time: 1767.3322167396545
+[2026-01-22 16:19:32] INFO inference_time: 29.03213143348694
+[2026-01-22 16:20:56] INFO {'epoch': 25, 'sport_5_ndcg@20': tensor(0.0219), 'sport_5_recall@20': tensor(0.0509), 'ndcg@20': tensor(0.0219), 'recall@20': tensor(0.0509), 'train_loss_0': tensor(0.2566, device='cuda:0')}
+[2026-01-22 16:20:56] INFO training_time: 1850.4553608894348
+[2026-01-22 16:20:56] INFO inference_time: 30.03140616416931
+[2026-01-22 16:22:19] INFO {'epoch': 26, 'sport_5_ndcg@20': tensor(0.0227), 'sport_5_recall@20': tensor(0.0517), 'ndcg@20': tensor(0.0227), 'recall@20': tensor(0.0517), 'train_loss_0': tensor(0.2542, device='cuda:0')}
+[2026-01-22 16:22:19] INFO training_time: 1932.2442419528961
+[2026-01-22 16:22:19] INFO inference_time: 31.21367907524109
+[2026-01-22 16:23:43] INFO {'epoch': 27, 'sport_5_ndcg@20': tensor(0.0229), 'sport_5_recall@20': tensor(0.0519), 'ndcg@20': tensor(0.0229), 'recall@20': tensor(0.0519), 'train_loss_0': tensor(0.2531, device='cuda:0')}
+[2026-01-22 16:23:43] INFO training_time: 2014.57408285141
+[2026-01-22 16:23:43] INFO inference_time: 32.48070549964905
+[2026-01-22 16:25:07] INFO {'epoch': 28, 'sport_5_ndcg@20': tensor(0.0227), 'sport_5_recall@20': tensor(0.0525), 'ndcg@20': tensor(0.0227), 'recall@20': tensor(0.0525), 'train_loss_0': tensor(0.2505, device='cuda:0')}
+[2026-01-22 16:25:07] INFO training_time: 2097.2658879756927
+[2026-01-22 16:25:07] INFO inference_time: 33.6366491317749
+[2026-01-22 16:26:31] INFO {'epoch': 29, 'sport_5_ndcg@20': tensor(0.0225), 'sport_5_recall@20': tensor(0.0519), 'ndcg@20': tensor(0.0225), 'recall@20': tensor(0.0519), 'train_loss_0': tensor(0.2507, device='cuda:0')}
+[2026-01-22 16:26:31] INFO training_time: 2181.0107867717743
+[2026-01-22 16:26:31] INFO inference_time: 34.78351593017578
+[2026-01-22 16:27:55] INFO {'epoch': 30, 'sport_5_ndcg@20': tensor(0.0233), 'sport_5_recall@20': tensor(0.0532), 'ndcg@20': tensor(0.0233), 'recall@20': tensor(0.0532), 'train_loss_0': tensor(0.2487, device='cuda:0')}
+[2026-01-22 16:27:55] INFO training_time: 2263.3878519535065
+[2026-01-22 16:27:55] INFO inference_time: 36.353909730911255
+[2026-01-22 16:27:55] INFO ndcg@20 improved. Best value: 0.0233
+[2026-01-22 16:27:55] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:29:20] INFO {'epoch': 31, 'sport_5_ndcg@20': tensor(0.0228), 'sport_5_recall@20': tensor(0.0519), 'ndcg@20': tensor(0.0228), 'recall@20': tensor(0.0519), 'train_loss_0': tensor(0.2469, device='cuda:0')}
+[2026-01-22 16:29:20] INFO training_time: 2346.5172872543335
+[2026-01-22 16:29:20] INFO inference_time: 37.50582146644592
+[2026-01-22 16:30:44] INFO {'epoch': 32, 'sport_5_ndcg@20': tensor(0.0231), 'sport_5_recall@20': tensor(0.0528), 'ndcg@20': tensor(0.0231), 'recall@20': tensor(0.0528), 'train_loss_0': tensor(0.2463, device='cuda:0')}
+[2026-01-22 16:30:44] INFO training_time: 2429.1861391067505
+[2026-01-22 16:30:44] INFO inference_time: 38.69214177131653
+[2026-01-22 16:32:08] INFO {'epoch': 33, 'sport_5_ndcg@20': tensor(0.0228), 'sport_5_recall@20': tensor(0.0519), 'ndcg@20': tensor(0.0228), 'recall@20': tensor(0.0519), 'train_loss_0': tensor(0.2452, device='cuda:0')}
+[2026-01-22 16:32:08] INFO training_time: 2512.583261489868
+[2026-01-22 16:32:08] INFO inference_time: 39.920191049575806
+[2026-01-22 16:33:32] INFO {'epoch': 34, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0537), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0537), 'train_loss_0': tensor(0.2443, device='cuda:0')}
+[2026-01-22 16:33:32] INFO training_time: 2594.868335008621
+[2026-01-22 16:33:32] INFO inference_time: 41.16637301445007
+[2026-01-22 16:33:32] INFO ndcg@20 improved. Best value: 0.0236
+[2026-01-22 16:33:32] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:34:55] INFO {'epoch': 35, 'sport_5_ndcg@20': tensor(0.0238), 'sport_5_recall@20': tensor(0.0543), 'ndcg@20': tensor(0.0238), 'recall@20': tensor(0.0543), 'train_loss_0': tensor(0.2422, device='cuda:0')}
+[2026-01-22 16:34:55] INFO training_time: 2676.8352971076965
+[2026-01-22 16:34:55] INFO inference_time: 42.28258967399597
+[2026-01-22 16:34:55] INFO ndcg@20 improved. Best value: 0.0238
+[2026-01-22 16:34:55] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:36:19] INFO {'epoch': 36, 'sport_5_ndcg@20': tensor(0.0232), 'sport_5_recall@20': tensor(0.0528), 'ndcg@20': tensor(0.0232), 'recall@20': tensor(0.0528), 'train_loss_0': tensor(0.2410, device='cuda:0')}
+[2026-01-22 16:36:19] INFO training_time: 2759.4262597560883
+[2026-01-22 16:36:19] INFO inference_time: 43.52855682373047
+[2026-01-22 16:37:43] INFO {'epoch': 37, 'sport_5_ndcg@20': tensor(0.0232), 'sport_5_recall@20': tensor(0.0530), 'ndcg@20': tensor(0.0232), 'recall@20': tensor(0.0530), 'train_loss_0': tensor(0.2406, device='cuda:0')}
+[2026-01-22 16:37:43] INFO training_time: 2842.7009341716766
+[2026-01-22 16:37:43] INFO inference_time: 44.68818497657776
+[2026-01-22 16:39:07] INFO {'epoch': 38, 'sport_5_ndcg@20': tensor(0.0233), 'sport_5_recall@20': tensor(0.0522), 'ndcg@20': tensor(0.0233), 'recall@20': tensor(0.0522), 'train_loss_0': tensor(0.2395, device='cuda:0')}
+[2026-01-22 16:39:07] INFO training_time: 2925.2900607585907
+[2026-01-22 16:39:07] INFO inference_time: 46.04383993148804
+[2026-01-22 16:40:32] INFO {'epoch': 39, 'sport_5_ndcg@20': tensor(0.0234), 'sport_5_recall@20': tensor(0.0526), 'ndcg@20': tensor(0.0234), 'recall@20': tensor(0.0526), 'train_loss_0': tensor(0.2385, device='cuda:0')}
+[2026-01-22 16:40:32] INFO training_time: 3008.63294005394
+[2026-01-22 16:40:32] INFO inference_time: 47.31012964248657
+[2026-01-22 16:41:56] INFO {'epoch': 40, 'sport_5_ndcg@20': tensor(0.0229), 'sport_5_recall@20': tensor(0.0515), 'ndcg@20': tensor(0.0229), 'recall@20': tensor(0.0515), 'train_loss_0': tensor(0.2369, device='cuda:0')}
+[2026-01-22 16:41:56] INFO training_time: 3090.9012246131897
+[2026-01-22 16:41:56] INFO inference_time: 48.983625173568726
+[2026-01-22 16:43:19] INFO {'epoch': 41, 'sport_5_ndcg@20': tensor(0.0233), 'sport_5_recall@20': tensor(0.0530), 'ndcg@20': tensor(0.0233), 'recall@20': tensor(0.0530), 'train_loss_0': tensor(0.2362, device='cuda:0')}
+[2026-01-22 16:43:19] INFO training_time: 3173.5031106472015
+[2026-01-22 16:43:19] INFO inference_time: 49.99415922164917
+[2026-01-22 16:44:42] INFO {'epoch': 42, 'sport_5_ndcg@20': tensor(0.0230), 'sport_5_recall@20': tensor(0.0524), 'ndcg@20': tensor(0.0230), 'recall@20': tensor(0.0524), 'train_loss_0': tensor(0.2367, device='cuda:0')}
+[2026-01-22 16:44:42] INFO training_time: 3255.6452782154083
+[2026-01-22 16:44:42] INFO inference_time: 51.02975559234619
+[2026-01-22 16:46:06] INFO {'epoch': 43, 'sport_5_ndcg@20': tensor(0.0234), 'sport_5_recall@20': tensor(0.0528), 'ndcg@20': tensor(0.0234), 'recall@20': tensor(0.0528), 'train_loss_0': tensor(0.2338, device='cuda:0')}
+[2026-01-22 16:46:06] INFO training_time: 3338.15296792984
+[2026-01-22 16:46:06] INFO inference_time: 52.30491352081299
+[2026-01-22 16:47:31] INFO {'epoch': 44, 'sport_5_ndcg@20': tensor(0.0233), 'sport_5_recall@20': tensor(0.0523), 'ndcg@20': tensor(0.0233), 'recall@20': tensor(0.0523), 'train_loss_0': tensor(0.2347, device='cuda:0')}
+[2026-01-22 16:47:31] INFO training_time: 3422.134967327118
+[2026-01-22 16:47:31] INFO inference_time: 53.42176413536072
+[2026-01-22 16:48:55] INFO {'epoch': 45, 'sport_5_ndcg@20': tensor(0.0238), 'sport_5_recall@20': tensor(0.0541), 'ndcg@20': tensor(0.0238), 'recall@20': tensor(0.0541), 'train_loss_0': tensor(0.2334, device='cuda:0')}
+[2026-01-22 16:48:55] INFO training_time: 3504.890517473221
+[2026-01-22 16:48:55] INFO inference_time: 54.397554874420166
+[2026-01-22 16:48:55] INFO ndcg@20 improved. Best value: 0.0238
+[2026-01-22 16:48:55] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:50:19] INFO {'epoch': 46, 'sport_5_ndcg@20': tensor(0.0237), 'sport_5_recall@20': tensor(0.0536), 'ndcg@20': tensor(0.0237), 'recall@20': tensor(0.0536), 'train_loss_0': tensor(0.2325, device='cuda:0')}
+[2026-01-22 16:50:19] INFO training_time: 3587.164299964905
+[2026-01-22 16:50:19] INFO inference_time: 55.49198246002197
+[2026-01-22 16:51:42] INFO {'epoch': 47, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0531), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0531), 'train_loss_0': tensor(0.2308, device='cuda:0')}
+[2026-01-22 16:51:42] INFO training_time: 3669.105453491211
+[2026-01-22 16:51:42] INFO inference_time: 56.5619752407074
+[2026-01-22 16:53:05] INFO {'epoch': 48, 'sport_5_ndcg@20': tensor(0.0235), 'sport_5_recall@20': tensor(0.0543), 'ndcg@20': tensor(0.0235), 'recall@20': tensor(0.0543), 'train_loss_0': tensor(0.2319, device='cuda:0')}
+[2026-01-22 16:53:05] INFO training_time: 3751.784094810486
+[2026-01-22 16:53:05] INFO inference_time: 57.713770627975464
+[2026-01-22 16:54:26] INFO {'epoch': 49, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0551), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0551), 'train_loss_0': tensor(0.2300, device='cuda:0')}
+[2026-01-22 16:54:26] INFO training_time: 3831.355132341385
+[2026-01-22 16:54:26] INFO inference_time: 58.75645589828491
+[2026-01-22 16:54:26] INFO ndcg@20 improved. Best value: 0.0240
+[2026-01-22 16:54:26] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 16:55:37] INFO {'epoch': 50, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0553), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0553), 'train_loss_0': tensor(0.2296, device='cuda:0')}
+[2026-01-22 16:55:37] INFO training_time: 3900.6211087703705
+[2026-01-22 16:55:37] INFO inference_time: 60.250566244125366
+[2026-01-22 16:56:47] INFO {'epoch': 51, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0539), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0539), 'train_loss_0': tensor(0.2277, device='cuda:0')}
+[2026-01-22 16:56:47] INFO training_time: 3969.871367931366
+[2026-01-22 16:56:47] INFO inference_time: 61.327847480773926
+[2026-01-22 16:57:58] INFO {'epoch': 52, 'sport_5_ndcg@20': tensor(0.0235), 'sport_5_recall@20': tensor(0.0543), 'ndcg@20': tensor(0.0235), 'recall@20': tensor(0.0543), 'train_loss_0': tensor(0.2280, device='cuda:0')}
+[2026-01-22 16:57:58] INFO training_time: 4039.2602772712708
+[2026-01-22 16:57:58] INFO inference_time: 62.407875537872314
+[2026-01-22 16:59:08] INFO {'epoch': 53, 'sport_5_ndcg@20': tensor(0.0237), 'sport_5_recall@20': tensor(0.0537), 'ndcg@20': tensor(0.0237), 'recall@20': tensor(0.0537), 'train_loss_0': tensor(0.2276, device='cuda:0')}
+[2026-01-22 16:59:08] INFO training_time: 4108.351554393768
+[2026-01-22 16:59:08] INFO inference_time: 63.419697999954224
+[2026-01-22 17:00:18] INFO {'epoch': 54, 'sport_5_ndcg@20': tensor(0.0230), 'sport_5_recall@20': tensor(0.0523), 'ndcg@20': tensor(0.0230), 'recall@20': tensor(0.0523), 'train_loss_0': tensor(0.2259, device='cuda:0')}
+[2026-01-22 17:00:18] INFO training_time: 4177.753831148148
+[2026-01-22 17:00:18] INFO inference_time: 64.40102887153625
+[2026-01-22 17:01:28] INFO {'epoch': 55, 'sport_5_ndcg@20': tensor(0.0234), 'sport_5_recall@20': tensor(0.0534), 'ndcg@20': tensor(0.0234), 'recall@20': tensor(0.0534), 'train_loss_0': tensor(0.2258, device='cuda:0')}
+[2026-01-22 17:01:28] INFO training_time: 4246.933029413223
+[2026-01-22 17:01:28] INFO inference_time: 65.3516640663147
+[2026-01-22 17:02:39] INFO {'epoch': 56, 'sport_5_ndcg@20': tensor(0.0239), 'sport_5_recall@20': tensor(0.0552), 'ndcg@20': tensor(0.0239), 'recall@20': tensor(0.0552), 'train_loss_0': tensor(0.2258, device='cuda:0')}
+[2026-01-22 17:02:39] INFO training_time: 4316.470761537552
+[2026-01-22 17:02:39] INFO inference_time: 66.64083194732666
+[2026-01-22 17:03:50] INFO {'epoch': 57, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0541), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0541), 'train_loss_0': tensor(0.2246, device='cuda:0')}
+[2026-01-22 17:03:50] INFO training_time: 4385.928270101547
+[2026-01-22 17:03:50] INFO inference_time: 67.81254649162292
+[2026-01-22 17:05:00] INFO {'epoch': 58, 'sport_5_ndcg@20': tensor(0.0241), 'sport_5_recall@20': tensor(0.0548), 'ndcg@20': tensor(0.0241), 'recall@20': tensor(0.0548), 'train_loss_0': tensor(0.2244, device='cuda:0')}
+[2026-01-22 17:05:00] INFO training_time: 4455.38757610321
+[2026-01-22 17:05:00] INFO inference_time: 68.95384955406189
+[2026-01-22 17:05:00] INFO ndcg@20 improved. Best value: 0.0241
+[2026-01-22 17:05:00] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 17:06:07] INFO {'epoch': 59, 'sport_5_ndcg@20': tensor(0.0238), 'sport_5_recall@20': tensor(0.0545), 'ndcg@20': tensor(0.0238), 'recall@20': tensor(0.0545), 'train_loss_0': tensor(0.2245, device='cuda:0')}
+[2026-01-22 17:06:07] INFO training_time: 4520.649628162384
+[2026-01-22 17:06:07] INFO inference_time: 69.9198694229126
+[2026-01-22 17:07:04] INFO {'epoch': 60, 'sport_5_ndcg@20': tensor(0.0247), 'sport_5_recall@20': tensor(0.0562), 'ndcg@20': tensor(0.0247), 'recall@20': tensor(0.0562), 'train_loss_0': tensor(0.2241, device='cuda:0')}
+[2026-01-22 17:07:04] INFO training_time: 4576.622372150421
+[2026-01-22 17:07:04] INFO inference_time: 71.23954916000366
+[2026-01-22 17:07:04] INFO ndcg@20 improved. Best value: 0.0247
+[2026-01-22 17:07:04] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 17:08:00] INFO {'epoch': 61, 'sport_5_ndcg@20': tensor(0.0241), 'sport_5_recall@20': tensor(0.0549), 'ndcg@20': tensor(0.0241), 'recall@20': tensor(0.0549), 'train_loss_0': tensor(0.2233, device='cuda:0')}
+[2026-01-22 17:08:00] INFO training_time: 4632.155028581619
+[2026-01-22 17:08:00] INFO inference_time: 72.32959342002869
+[2026-01-22 17:08:55] INFO {'epoch': 62, 'sport_5_ndcg@20': tensor(0.0241), 'sport_5_recall@20': tensor(0.0557), 'ndcg@20': tensor(0.0241), 'recall@20': tensor(0.0557), 'train_loss_0': tensor(0.2224, device='cuda:0')}
+[2026-01-22 17:08:55] INFO training_time: 4686.0219621658325
+[2026-01-22 17:08:55] INFO inference_time: 73.33325529098511
+[2026-01-22 17:09:41] INFO {'epoch': 63, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0546), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0546), 'train_loss_0': tensor(0.2216, device='cuda:0')}
+[2026-01-22 17:09:41] INFO training_time: 4730.107555627823
+[2026-01-22 17:09:41] INFO inference_time: 74.42441463470459
+[2026-01-22 17:10:26] INFO {'epoch': 64, 'sport_5_ndcg@20': tensor(0.0243), 'sport_5_recall@20': tensor(0.0556), 'ndcg@20': tensor(0.0243), 'recall@20': tensor(0.0556), 'train_loss_0': tensor(0.2208, device='cuda:0')}
+[2026-01-22 17:10:26] INFO training_time: 4774.905319452286
+[2026-01-22 17:10:26] INFO inference_time: 75.36217951774597
+[2026-01-22 17:11:12] INFO {'epoch': 65, 'sport_5_ndcg@20': tensor(0.0246), 'sport_5_recall@20': tensor(0.0564), 'ndcg@20': tensor(0.0246), 'recall@20': tensor(0.0564), 'train_loss_0': tensor(0.2201, device='cuda:0')}
+[2026-01-22 17:11:12] INFO training_time: 4819.713138580322
+[2026-01-22 17:11:12] INFO inference_time: 76.4490807056427
+[2026-01-22 17:11:45] INFO {'epoch': 66, 'sport_5_ndcg@20': tensor(0.0239), 'sport_5_recall@20': tensor(0.0550), 'ndcg@20': tensor(0.0239), 'recall@20': tensor(0.0550), 'train_loss_0': tensor(0.2209, device='cuda:0')}
+[2026-01-22 17:11:45] INFO training_time: 4851.917307138443
+[2026-01-22 17:11:45] INFO inference_time: 77.53630518913269
+[2026-01-22 17:12:18] INFO {'epoch': 67, 'sport_5_ndcg@20': tensor(0.0242), 'sport_5_recall@20': tensor(0.0562), 'ndcg@20': tensor(0.0242), 'recall@20': tensor(0.0562), 'train_loss_0': tensor(0.2204, device='cuda:0')}
+[2026-01-22 17:12:18] INFO training_time: 4883.371713399887
+[2026-01-22 17:12:18] INFO inference_time: 78.38722825050354
+[2026-01-22 17:12:50] INFO {'epoch': 68, 'sport_5_ndcg@20': tensor(0.0242), 'sport_5_recall@20': tensor(0.0553), 'ndcg@20': tensor(0.0242), 'recall@20': tensor(0.0553), 'train_loss_0': tensor(0.2190, device='cuda:0')}
+[2026-01-22 17:12:50] INFO training_time: 4914.650746822357
+[2026-01-22 17:12:50] INFO inference_time: 79.43027400970459
+[2026-01-22 17:13:22] INFO {'epoch': 69, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0535), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0535), 'train_loss_0': tensor(0.2193, device='cuda:0')}
+[2026-01-22 17:13:22] INFO training_time: 4945.844748020172
+[2026-01-22 17:13:22] INFO inference_time: 80.55391240119934
+[2026-01-22 17:13:55] INFO {'epoch': 70, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0553), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0553), 'train_loss_0': tensor(0.2179, device='cuda:0')}
+[2026-01-22 17:13:55] INFO training_time: 4977.7756333351135
+[2026-01-22 17:13:55] INFO inference_time: 81.64920258522034
+[2026-01-22 17:14:28] INFO {'epoch': 71, 'sport_5_ndcg@20': tensor(0.0232), 'sport_5_recall@20': tensor(0.0533), 'ndcg@20': tensor(0.0232), 'recall@20': tensor(0.0533), 'train_loss_0': tensor(0.2185, device='cuda:0')}
+[2026-01-22 17:14:28] INFO training_time: 5009.313362360001
+[2026-01-22 17:14:28] INFO inference_time: 82.66370296478271
+[2026-01-22 17:15:00] INFO {'epoch': 72, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0547), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0547), 'train_loss_0': tensor(0.2178, device='cuda:0')}
+[2026-01-22 17:15:00] INFO training_time: 5040.607654809952
+[2026-01-22 17:15:00] INFO inference_time: 83.59625434875488
+[2026-01-22 17:15:33] INFO {'epoch': 73, 'sport_5_ndcg@20': tensor(0.0240), 'sport_5_recall@20': tensor(0.0544), 'ndcg@20': tensor(0.0240), 'recall@20': tensor(0.0544), 'train_loss_0': tensor(0.2173, device='cuda:0')}
+[2026-01-22 17:15:33] INFO training_time: 5071.9244747161865
+[2026-01-22 17:15:33] INFO inference_time: 84.5562789440155
+[2026-01-22 17:16:05] INFO {'epoch': 74, 'sport_5_ndcg@20': tensor(0.0238), 'sport_5_recall@20': tensor(0.0541), 'ndcg@20': tensor(0.0238), 'recall@20': tensor(0.0541), 'train_loss_0': tensor(0.2173, device='cuda:0')}
+[2026-01-22 17:16:05] INFO training_time: 5103.8223259449005
+[2026-01-22 17:16:05] INFO inference_time: 85.4807403087616
+[2026-01-22 17:16:38] INFO {'epoch': 75, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0545), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0545), 'train_loss_0': tensor(0.2166, device='cuda:0')}
+[2026-01-22 17:16:38] INFO training_time: 5135.704882144928
+[2026-01-22 17:16:38] INFO inference_time: 86.69022035598755
+[2026-01-22 17:17:11] INFO {'epoch': 76, 'sport_5_ndcg@20': tensor(0.0241), 'sport_5_recall@20': tensor(0.0553), 'ndcg@20': tensor(0.0241), 'recall@20': tensor(0.0553), 'train_loss_0': tensor(0.2162, device='cuda:0')}
+[2026-01-22 17:17:11] INFO training_time: 5166.920980215073
+[2026-01-22 17:17:11] INFO inference_time: 87.61447834968567
+[2026-01-22 17:17:40] INFO {'epoch': 77, 'sport_5_ndcg@20': tensor(0.0241), 'sport_5_recall@20': tensor(0.0547), 'ndcg@20': tensor(0.0241), 'recall@20': tensor(0.0547), 'train_loss_0': tensor(0.2168, device='cuda:0')}
+[2026-01-22 17:17:40] INFO training_time: 5195.822744369507
+[2026-01-22 17:17:40] INFO inference_time: 88.4956591129303
+[2026-01-22 17:18:05] INFO {'epoch': 78, 'sport_5_ndcg@20': tensor(0.0236), 'sport_5_recall@20': tensor(0.0542), 'ndcg@20': tensor(0.0236), 'recall@20': tensor(0.0542), 'train_loss_0': tensor(0.2148, device='cuda:0')}
+[2026-01-22 17:18:05] INFO training_time: 5219.727707624435
+[2026-01-22 17:18:05] INFO inference_time: 89.58702230453491
+[2026-01-22 17:18:31] INFO {'epoch': 79, 'sport_5_ndcg@20': tensor(0.0239), 'sport_5_recall@20': tensor(0.0548), 'ndcg@20': tensor(0.0239), 'recall@20': tensor(0.0548), 'train_loss_0': tensor(0.2140, device='cuda:0')}
+[2026-01-22 17:18:31] INFO training_time: 5243.939770460129
+[2026-01-22 17:18:31] INFO inference_time: 90.5628273487091
+[2026-01-22 17:18:55] INFO {'epoch': 80, 'sport_5_ndcg@20': tensor(0.0242), 'sport_5_recall@20': tensor(0.0555), 'ndcg@20': tensor(0.0242), 'recall@20': tensor(0.0555), 'train_loss_0': tensor(0.2148, device='cuda:0')}
+[2026-01-22 17:18:55] INFO training_time: 5267.197386980057
+[2026-01-22 17:18:55] INFO inference_time: 91.7464349269867
+[2026-01-22 17:18:55] INFO Early stopped. Since the metric ndcg@20 haven't been improved for 20 epochs.
+[2026-01-22 17:18:55] INFO The best score of ndcg@20 is 0.0247 on epoch 60
+[2026-01-22 17:18:55] INFO Best model checkpoint saved in saved/MetaModel/noisy_5/2026-01-22-15-49-28-721455.ckpt.
+[2026-01-22 17:18:56] INFO defaultdict(<class 'float'>, {'sport_5_ndcg@20': tensor(0.0183), 'sport_5_recall@20': tensor(0.0429), 'sport_5_ndcg@10': tensor(0.0144), 'sport_5_recall@10': tensor(0.0274), 'ndcg@20': tensor(0.0183), 'recall@20': tensor(0.0429), 'ndcg@10': tensor(0.0144), 'recall@10': tensor(0.0274)})
